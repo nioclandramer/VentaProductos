@@ -18,7 +18,7 @@ public class Producto {
 
     private String nombre;
 
-    private Integer Precio;
+    private Integer precio;
 
     private Integer Stock;
 
