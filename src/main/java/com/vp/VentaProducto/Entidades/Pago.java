@@ -3,7 +3,7 @@ package com.vp.VentaProducto.Entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -11,17 +11,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Producto {
+@Builder
+public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    private Float totalPago;
 
-    private Integer Precio;
+    private LocalDateTime fechaPago;
 
-    private Integer Stock;
+    private MetodoDePago metodoDePago;
 
-    @OneToMany(mappedBy = "producto")
-    private List<ItemPedido> itemPedidos;
+    @OneToOne
+    @JoinColumn(name = "pedidoId")
+    private Pedido pedido;
 }

@@ -3,25 +3,25 @@ package com.vp.VentaProducto.Entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Table
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Producto {
+@Builder
+public class DetalleEnvio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
+    private String direccion;
 
-    private Integer Precio;
+    private String transportadora;
 
-    private Integer Stock;
+    private Integer numeroGuia;
 
-    @OneToMany(mappedBy = "producto")
-    private List<ItemPedido> itemPedidos;
+    @OneToOne
+    @JoinColumn(name = "pedidoId")
+    private Pedido pedido;
 }
