@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -138,5 +139,73 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
         pagoRepository.deleteById(pagoSave.getId());
         //then
         assertThat(pagoRepository.findById(pagoSave.getId())).isEmpty();
+    }
+    @Test
+    void GiveDates_WhenSearchBetweenDates_ReturnAnList(){
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.PENDIENTE);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Pedido pedido3=new Pedido();
+        pedido3.setFechaPedido(LocalDateTime.of(2021, Month.AUGUST,10,8,20));
+        pedido3.setEstado(EstatusPedido.PENDIENTE);
+        pedido3.setCliente(cliente);
+        pedidoRepository.save(pedido3);
+
+        Pago pago= Pago.builder().fechaPago(LocalDateTime.of(2024,Month.JULY,10,4,30))
+                .metodoDePago(MetodoDePago.EFECTIVO)
+                .totalPago(12F)
+                .pedido(pedido).build();
+        pagoRepository.save(pago);
+
+        Pago pago2= Pago.builder()
+                .fechaPago(LocalDateTime.of(2024,Month.DECEMBER,23,10,39))
+                .metodoDePago(MetodoDePago.NEQUI)
+                .totalPago(12F)
+                .pedido(pedido3).build();
+        pagoRepository.save(pago2);
+        //when
+
+        Optional<List<Pago>>pagos=pagoRepository.findByFechaPagoBetween(LocalDateTime.of(2024,Month.JULY,5,1,1)
+                ,LocalDateTime.of(2025,Month.JULY,13,4,30));
+        //Then
+        assertThat(pagos).isPresent();
+        assertThat(pagos.get()).hasSize(2);
+    }
+    @Test
+    void GivePago_WhenSearchByIdAndMetododePago_returnAnPago(){
+        //Give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.PENDIENTE);
+        pedido.setCliente(cliente);
+
+        pedidoRepository.save(pedido);
+
+        Pago pago= Pago.builder().fechaPago(LocalDateTime.of(2024,Month.JULY,10,4,30))
+                .metodoDePago(MetodoDePago.EFECTIVO)
+                .totalPago(12F)
+                .pedido(pedido).build();
+        pagoRepository.save(pago);
+       //When
+        Optional<Pago> pagoFound = pagoRepository.findByIdAndMetodoDePago(pago.getId(), MetodoDePago.EFECTIVO);
+        //Then
+        assertThat(pagoFound).isPresent();
+        assertThat(pagoFound.get().getMetodoDePago()).isEqualTo(MetodoDePago.EFECTIVO);
     }
 }
