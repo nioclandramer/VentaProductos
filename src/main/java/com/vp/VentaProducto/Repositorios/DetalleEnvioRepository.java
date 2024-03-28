@@ -1,6 +1,7 @@
 package com.vp.VentaProducto.Repositorios;
 
 import com.vp.VentaProducto.Entidades.DetalleEnvio;
+import com.vp.VentaProducto.Entidades.EstatusPedido;
 import com.vp.VentaProducto.Entidades.ItemPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,5 +14,5 @@ public interface DetalleEnvioRepository extends JpaRepository<DetalleEnvio, Long
     Optional<DetalleEnvio> findByPedidoId(Long pedidoId);
     Optional<List<DetalleEnvio>> findByTransportadora(String transportadora);
     @Query("SELECT de FROM DetalleEnvio de INNER JOIN de.pedido p WHERE p.estado= :estado")
-    Optional<List<DetalleEnvio>> findByestado(@Param("estado")String estado);
+    Optional<List<DetalleEnvio>> findByestado(@Param("estado")EstatusPedido estado);
 }
