@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class PagoRepositoryTest extends AstractIntegrationBDTest {
     PagoRepository pagoRepository;
@@ -28,6 +28,8 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
     @BeforeEach
     void setUp() {
         pagoRepository.deleteAll();
+        pedidoRepository.deleteAll();
+        clienteRepository.deleteAll();
     }
 
     @Test
@@ -37,17 +39,19 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Pago pago=new Pago();
         pago.setTotalPago(123F);
         pago.setMetodoDePago(MetodoDePago.EFECTIVO);
         pago.setFechaPago(LocalDateTime.of(2024,Month.JULY,20,15,10));
-        pago.setPedido(pedido);
+        pago.setPedido(pedidoSave);
         //When
         Pago pagoSave=pagoRepository.save(pago);
         //then
@@ -62,17 +66,19 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Pago pago=new Pago();
         pago.setTotalPago(123F);
         pago.setMetodoDePago(MetodoDePago.EFECTIVO);
         pago.setFechaPago(LocalDateTime.of(2024,Month.JULY,20,15,10));
-        pago.setPedido(pedido);
+        pago.setPedido(pedidoSave);
         Pago pagoSave=pagoRepository.save(pago);
         //when
         Optional<Pago> optionalPago=pagoRepository.findById(pagoSave.getId());
@@ -87,17 +93,19 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Pago pago=new Pago();
         pago.setTotalPago(123F);
         pago.setMetodoDePago(MetodoDePago.EFECTIVO);
         pago.setFechaPago(LocalDateTime.of(2024,Month.JULY,20,15,10));
-        pago.setPedido(pedido);
+        pago.setPedido(pedidoSave);
         Pago pagoSave=pagoRepository.save(pago);
         //When
         pagoSave.setFechaPago(LocalDateTime.of(2024,Month.JULY,25,15,10));
@@ -113,17 +121,19 @@ class PagoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Pago pago=new Pago();
         pago.setTotalPago(123F);
         pago.setMetodoDePago(MetodoDePago.EFECTIVO);
         pago.setFechaPago(LocalDateTime.of(2024,Month.JULY,20,15,10));
-        pago.setPedido(pedido);
+        pago.setPedido(pedidoSave);
         Pago pagoSave=pagoRepository.save(pago);
         //when
         pagoRepository.deleteById(pagoSave.getId());
