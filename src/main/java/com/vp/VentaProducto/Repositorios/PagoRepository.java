@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface PagoRepository extends JpaRepository<Pago,Long> {
     Optional<List<Pago>> findByFechaPagoBetween(LocalDateTime fechaInicio,LocalDateTime fechaFinal);
-    Optional<List<Pago>> findByIdAndMetodoDePago(Long pagoId, MetodoDePago metodoDePago);
+    Optional<Pago> findByIdAndMetodoDePago(Long pagoId, MetodoDePago metodoDePago);
 }
