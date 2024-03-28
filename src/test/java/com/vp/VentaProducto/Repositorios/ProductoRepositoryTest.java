@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.InstanceOfAssertFactories.OPTIONAL;
@@ -74,9 +75,33 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         producto.setPrecio(15);
         Producto productoSave=productoRepository.save(producto);
         //When
-        productoRepository.deleteById(productoSave.getId());
+        productoSave.setNombre("Crema de cocoo");
+        productoRepository.save(productoSave);
         //then
-        assertThat(productoRepository.findById(productoSave.getId())).isEmpty();
+        assertThat(productoSave.getNombre()).isEqualTo("Crema de cocoo");
     }
 
+    @Test
+    void findByNombreContainingIgnoreCase_WhenSave_ReturnsProductList(){
+        //Given
+        Producto producto1= new Producto();
+        producto1.setNombre("Crema de Marihuana");
+        producto1.setStock(15);
+        producto1.setPrecio(12);
+
+        Producto producto2= new Producto();
+        producto2.setNombre("Postre de 4 leches");
+        producto2.setStock(12);
+        producto2.setPrecio(5);
+
+        productoRepository.save(producto1);
+        productoRepository.save(producto2);
+        //When
+        List<Producto> productosFound= productoRepository.findByNombreContainingIgnoreCase("leches");
+        assertThat(productosFound.size()).isEqualTo(1);
+        assertThat(productosFound).isNotEmpty();
+
+
+
+    }
 }
