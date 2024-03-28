@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.InstanceOfAssertFactories.OPTIONAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductoRepositoryTest extends AstractIntegrationBDTest {
@@ -20,7 +23,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         productoRepository.deleteAll();
     }
     @Test
-    void giveProducto_WhenCreate_ProductoIdIsSave(){
+    void giveProducto_WhenCreate_ThenProductoIdIsSave(){
         //Given
         Producto producto=new Producto();
         producto.setNombre("Crema de Marihuana");
@@ -30,9 +33,51 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         Producto productoSave=productoRepository.save(producto);
         //then
         assertThat(productoSave).isNotNull();
-        //assertThat(productoSave.getStock()).isEqualTo(15);
-
+        assertThat(productoSave.getStock()).isEqualTo(15);
     }
 
+    @Test
+    void giveProductoId_WhenFindById_ThenProductoIsFound(){
+        //Given
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
+        //When
+        Optional<Producto> optionalProducto = productoRepository.findById(producto.getId());
+        //then
+        assertThat(optionalProducto).isPresent();
+    }
+
+    @Test
+    void giveProducto_WhenUpdate_ThenProductoUpdate(){
+        //Given
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
+        //When
+        productoSave.setNombre("Crema de cocoo");
+        productoRepository.save(productoSave);
+        //then
+        assertThat(productoSave.getNombre()).isEqualTo("Crema de cocoo");
+    }
+
+    @Test
+    void giveProductoId_WhenDeleteById_ThenProductoIsDelete(){
+        //Given
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
+        //When
+        productoSave.setNombre("Crema de cocoo");
+        productoRepository.save(productoSave);
+        //then
+        assertThat(productoSave.getNombre()).isEqualTo("Crema de cocoo");
+    }
 
 }
