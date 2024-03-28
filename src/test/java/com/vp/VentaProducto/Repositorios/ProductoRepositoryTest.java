@@ -76,7 +76,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         //When
         productoRepository.deleteById(productoSave.getId());
         //then
-        assertThat(productoSave.getNombre()).isEqualTo("Crema de cocoo");
+        assertThat(productoRepository.findById(productoSave.getId())).isEmpty();
     }
 
 }
