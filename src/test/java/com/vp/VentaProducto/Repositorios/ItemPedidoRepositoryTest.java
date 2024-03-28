@@ -27,7 +27,11 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
 
     @BeforeEach
     void setUp() {
-        itemPedidoRepository.deleteAll();}
+        itemPedidoRepository.deleteAll();
+        pedidoRepository.deleteAll();
+        clienteRepository.deleteAll();
+        productoRepository.deleteAll();
+    }
 
     @Test
     void GiveItemPedido_WhenCreate_ThenItemPedidoIdIsSaved(){
@@ -36,22 +40,25 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
         producto.setStock(12);
         producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
 
         ItemPedido itemPedido=ItemPedido.builder()
                 .cantida(200)
                 .precioUnitario(400000)
-                .pedido(pedido)
-                .producto(producto)
+                .pedido(pedidoSave)
+                .producto(productoSave)
                 .build();
         //When
         ItemPedido itemPedidoSave=itemPedidoRepository.save(itemPedido);
@@ -67,22 +74,25 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
         producto.setStock(12);
         producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
 
         ItemPedido itemPedido=ItemPedido.builder()
                 .cantida(200)
                 .precioUnitario(400000)
-                .pedido(pedido)
-                .producto(producto)
+                .pedido(pedidoSave)
+                .producto(productoSave)
                 .build();
         ItemPedido itemPedidoSave=itemPedidoRepository.save(itemPedido);
         //when
@@ -98,22 +108,25 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
         producto.setStock(12);
         producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
 
         ItemPedido itemPedido=ItemPedido.builder()
                 .cantida(200)
                 .precioUnitario(400000)
-                .pedido(pedido)
-                .producto(producto)
+                .pedido(pedidoSave)
+                .producto(productoSave)
                 .build();
         ItemPedido itemPedidoSave=itemPedidoRepository.save(itemPedido);
         //When
@@ -130,22 +143,25 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
 
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
         producto.setStock(12);
         producto.setPrecio(15);
+        Producto productoSave=productoRepository.save(producto);
 
         ItemPedido itemPedido=ItemPedido.builder()
                 .cantida(200)
                 .precioUnitario(400000)
-                .pedido(pedido)
-                .producto(producto)
+                .pedido(pedidoSave)
+                .producto(productoSave)
                 .build();
         ItemPedido itemPedidoSave=itemPedidoRepository.save(itemPedido);
         //when

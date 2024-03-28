@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.Assertions.as;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import java.time.Month;
 import java.util.Optional;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class PedidoRepositoryTest extends AstractIntegrationBDTest {
     PedidoRepository pedidoRepository;
@@ -44,11 +44,12 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
         //When
         Pedido pedidoSave = pedidoRepository.save(pedido);
         //then
@@ -62,11 +63,12 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
         Pedido pedidoSave = pedidoRepository.save(pedido);
         //when
         Optional<Pedido> optionalPedido=pedidoRepository.findById(pedidoSave.getId());
@@ -81,11 +83,12 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
         Pedido pedidoSave = pedidoRepository.save(pedido);
         //When
         pedidoSave.setEstado(EstatusPedido.PENDIENTE);
@@ -101,11 +104,12 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         cliente.setNombre("rober");
         cliente.setDireccion("casa28");
         cliente.setEmail("jolsagmail.com");
+        Cliente clienteSave=clienteRepository.save(cliente);
 
         Pedido pedido=new Pedido();
         pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
         pedido.setEstado(EstatusPedido.ENVIADO);
-        pedido.setCliente(cliente);
+        pedido.setCliente(clienteSave);
         Pedido pedidoSave = pedidoRepository.save(pedido);
         //when
         pedidoRepository.deleteById(pedidoSave.getId());
