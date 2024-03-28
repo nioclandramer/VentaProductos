@@ -75,10 +75,9 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         producto.setPrecio(15);
         Producto productoSave=productoRepository.save(producto);
         //When
-        productoSave.setNombre("Crema de cocoo");
-        productoRepository.save(productoSave);
+        productoRepository.deleteById(productoSave.getId());
         //then
-        assertThat(productoSave.getNombre()).isEqualTo("Crema de cocoo");
+        assertThat(productoRepository.findById(productoSave.getId())).isEmpty();
     }
 
     @Test
