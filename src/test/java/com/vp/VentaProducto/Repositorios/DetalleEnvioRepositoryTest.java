@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -145,6 +146,124 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
         detalleEnvioRepository.deleteById(detalleEnvioSave.getId());
         //then
         assertThat(detalleEnvioRepository.findById(detalleEnvioSave.getId())).isEmpty();
+
+    }
+    @Test
+    void GiveDetalleEnvio_WhenSearchByPedidoId_ReturnsAnObject(){
+        //Given
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        DetalleEnvio detalleEnvio=DetalleEnvio.builder()
+                .direccion(cliente.getDireccion())
+                .transportadora("SaramambicheTransportes")
+                .numeroGuia(102938483)
+                .pedido(pedido)
+                .build();
+        detalleEnvioRepository.save(detalleEnvio);
+        //When
+        Optional<DetalleEnvio>detalleEnvioFound= detalleEnvioRepository.findByPedidoId(pedido.getId());
+        //Then
+        assertThat(detalleEnvioFound).isPresent();
+        assertThat(detalleEnvioFound.get().getTransportadora()).isEqualTo("SaramambicheTransportes");
+
+    }
+    @Test
+    void GivenDetalleEnvio_WhenSearchBytransportadora_ThenFoundALLDetalleEnvioWithThatTransportadora(){
+        //Given
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Pedido pedido2=new Pedido();
+        pedido2.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido2.setEstado(EstatusPedido.ENVIADO);
+        pedido2.setCliente(cliente);
+        pedidoRepository.save(pedido2);
+
+
+        DetalleEnvio detalleEnvio=DetalleEnvio.builder()
+                .direccion(cliente.getDireccion())
+                .transportadora("SaramambicheTransportes")
+                .numeroGuia(102938483)
+                .pedido(pedido)
+                .build();
+        detalleEnvioRepository.save(detalleEnvio);
+        DetalleEnvio detalleEnvio2=DetalleEnvio.builder()
+                .direccion(cliente.getDireccion())
+                .transportadora("SaramambicheTransportes")
+                .numeroGuia(102938)
+                .pedido(pedido2)
+                .build();
+        detalleEnvioRepository.save(detalleEnvio2);
+
+        //When
+        Optional<List<DetalleEnvio>>detalleEnvios=detalleEnvioRepository.findByTransportadora("SaramambicheTransportes");
+        //Then
+        assertThat(detalleEnvios).isNotEmpty();
+        assertThat(detalleEnvios.get()).hasSize(2);
+    }
+    @Test
+    void GivenDetalleEnvio_WhenSearchByEstado_GetAllDetalleEnvio(){
+        //Given
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Pedido pedido2=new Pedido();
+        pedido2.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido2.setEstado(EstatusPedido.ENVIADO);
+        pedido2.setCliente(cliente);
+        pedidoRepository.save(pedido2);
+
+
+        DetalleEnvio detalleEnvio=DetalleEnvio.builder()
+                .direccion(cliente.getDireccion())
+                .transportadora("SaramambicheTransportes")
+                .numeroGuia(102938483)
+                .pedido(pedido)
+                .build();
+        detalleEnvioRepository.save(detalleEnvio);
+        DetalleEnvio detalleEnvio2=DetalleEnvio.builder()
+                .direccion(cliente.getDireccion())
+                .transportadora("SaramambicheTransportes")
+                .numeroGuia(102938)
+                .pedido(pedido2)
+                .build();
+        detalleEnvioRepository.save(detalleEnvio2);
+        //When
+        Optional<List<DetalleEnvio>>detalleEnvios=detalleEnvioRepository.findByestado(EstatusPedido.ENVIADO);
+        //then
+        assertThat(detalleEnvios).isNotEmpty();
+        assertThat(detalleEnvios.get()).hasSize(2);
+
 
     }
 }
