@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PedidoRepository extends JpaRepository<Pedido,Long> {
-   // Optional<List<Pedido>> findByFechaPedidoBetween(LocalDateTime fechaInicio,LocalDateTime fechaFin);
-   // Optional<List<Pedido>> findByClienteAndEstado(Long clienteId, EstatusPedido estatusPedido);
+
+    Optional<List<Pedido>> findByFechaPedidoBetween(LocalDateTime fechaInicio,LocalDateTime fechaFin);
+    @Query("SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId AND p.estado = :estatusPedido")
+    Optional<List<Pedido>> findByClienteAndEstado(Long clienteId, EstatusPedido estatusPedido);
     @Query("SELECT p from Pedido p JOIN FETCH p.itemPedidos WHERE p.cliente = :cliente")
     Optional<List<Pedido>> findByClienteWhithItemPedidos(Cliente cliente);
 
