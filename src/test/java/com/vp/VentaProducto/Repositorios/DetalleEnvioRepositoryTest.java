@@ -35,7 +35,7 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void Give_WhenCreate_ThenIdIsSaved(){
+    void GiveDetalleEnvio_WhenCreate_ThenDetalleEnvioIdIsSaved(){
         //Give
         Cliente cliente=new Cliente();
         cliente.setNombre("rober");
@@ -63,7 +63,7 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void GiveId_whenFindById_thenIsFound(){
+    void GiveDetalleEnvioId_whenFindById_thenDetalleEnvioIsFound(){
         //give
         Cliente cliente=new Cliente();
         cliente.setNombre("rober");
@@ -91,7 +91,7 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void Given_WhenUpdate_ThenUpdated(){
+    void GivenDetalleEnvio_WhenUpdate_ThenDetalleEnvioUpdated(){
         //give
         Cliente cliente=new Cliente();
         cliente.setNombre("rober");
@@ -120,7 +120,7 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void GiveId_WhenDeleteById_thenIsDeleted(){
+    void GiveDetalleEnvioId_WhenDeleteById_thenDetalleEnvioIsDeleted(){
         //give
         Cliente cliente=new Cliente();
         cliente.setNombre("rober");
