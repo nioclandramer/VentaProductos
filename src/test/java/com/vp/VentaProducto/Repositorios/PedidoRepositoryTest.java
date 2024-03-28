@@ -7,6 +7,8 @@ import com.vp.VentaProducto.Entidades.Pedido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDateTime;
@@ -30,6 +32,84 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         pedidoRepository.deleteAll();
         clienteRepository.deleteAll();
     }
+
+    @Test
+    void GivePedido_WhenCreate_ThenPedidoIdIsSaved(){
+        //Give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        //When
+        Pedido pedidoSave = pedidoRepository.save(pedido);
+        //then
+        assertThat(pedidoSave).isNotNull();
+    }
+
+    @Test
+    void GivePedidoId_whenFindById_thenPedidoIsFound(){
+        //give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
+        //when
+        Optional<Pedido> optionalPedido=pedidoRepository.findById(pedidoSave.getId());
+        //then
+        assertThat(optionalPedido).isPresent();
+    }
+
+    @Test
+    void GivenPedido_WhenUpdate_ThenPedidoUpdated(){
+        //give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
+        //When
+        pedidoSave.setEstado(EstatusPedido.PENDIENTE);
+        pedidoRepository.save(pedidoSave);
+        //then
+        assertThat(pedidoSave.getEstado()).isEqualTo(EstatusPedido.PENDIENTE);
+    }
+
+    @Test
+    void GivePedidoId_WhenDeleteById_thenPedidoIsDeleted(){
+        //give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024,Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        Pedido pedidoSave = pedidoRepository.save(pedido);
+        //when
+        pedidoRepository.deleteById(pedidoSave.getId());
+        //then
+        assertThat(pedidoRepository.findById(pedidoSave.getId())).isEmpty();
+    }
+
+
     @Test
     void PedidosWithDate_WhenSearchPedidosBeetwenDates_ThenListPedidos(){
 
