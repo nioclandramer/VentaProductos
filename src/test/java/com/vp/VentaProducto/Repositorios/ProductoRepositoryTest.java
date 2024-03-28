@@ -24,7 +24,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         productoRepository.deleteAll();
     }
     @Test
-    void giveProducto_WhenCreate_ThenProductoIdIsSave(){
+    void GiveProducto_WhenCreate_ThenProductoIdIsSave(){
         //Given
         Producto producto=new Producto();
         producto.setNombre("Crema de Marihuana");
@@ -38,7 +38,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void giveProductoId_WhenFindById_ThenProductoIsFound(){
+    void GiveProductoId_WhenFindById_ThenProductoIsFound(){
         //Given
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
@@ -52,7 +52,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void giveProducto_WhenUpdate_ThenProductoUpdate(){
+    void GiveProducto_WhenUpdate_ThenProductoUpdate(){
         //Given
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");
@@ -67,7 +67,7 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void giveProductoId_WhenDeleteById_ThenProductoIsDelete(){
+    void GiveProductoId_WhenDeleteById_ThenProductoIsDelete(){
         //Given
         Producto producto=new Producto();
         producto.setNombre("Crema de coc");

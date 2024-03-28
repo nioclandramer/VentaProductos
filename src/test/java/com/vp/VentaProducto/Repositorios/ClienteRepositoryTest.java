@@ -73,7 +73,7 @@ class ClienteRepositoryTest extends AstractIntegrationBDTest {
     }
 
     @Test
-    void giveClienteId_WhenDeleteById_thenClienteIsDeleted(){
+    void GiveClienteId_WhenDeleteById_thenClienteIsDeleted(){
         //give
         Cliente cliente=new Cliente();
         cliente.setNombre("juan cuna");
