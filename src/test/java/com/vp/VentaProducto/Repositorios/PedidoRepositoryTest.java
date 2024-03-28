@@ -1,9 +1,7 @@
 package com.vp.VentaProducto.Repositorios;
 
 import com.vp.VentaProducto.AstractIntegrationBDTest;
-import com.vp.VentaProducto.Entidades.Cliente;
-import com.vp.VentaProducto.Entidades.EstatusPedido;
-import com.vp.VentaProducto.Entidades.Pedido;
+import com.vp.VentaProducto.Entidades.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +17,22 @@ import static org.junit.jupiter.api.Assertions.*;
 class PedidoRepositoryTest extends AstractIntegrationBDTest {
     PedidoRepository pedidoRepository;
     ClienteRepository clienteRepository;
+    ProductoRepository productoRepository;
+    ItemPedidoRepository itemPedidoRepository;
     @Autowired
-    public PedidoRepositoryTest(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
+    public PedidoRepositoryTest(PedidoRepository pedidoRepository, ClienteRepository clienteRepository,ItemPedidoRepository itemPedidoRepository,ProductoRepository productoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository=clienteRepository;
+        this.itemPedidoRepository=itemPedidoRepository;
+        this.productoRepository=productoRepository;
     }
 
     @BeforeEach
     void setUp() {
         pedidoRepository.deleteAll();
         clienteRepository.deleteAll();
+        itemPedidoRepository.deleteAll();
+        productoRepository.deleteAll();
     }
     @Test
     void PedidosWithDate_WhenSearchPedidosBeetwenDates_ThenListPedidos(){
@@ -106,6 +110,51 @@ class PedidoRepositoryTest extends AstractIntegrationBDTest {
         assertThat(pedidosFound.stream().toList()).hasSize(1);
         Pedido pedido3=pedidosFound.get().get(0);
         assertThat(pedido3.getEstado()).isEqualTo(EstatusPedido.ENTREGADO);
+    }
+    @Test
+    void GivePedidoAndCliente_WhenFindClienteAndItemsPedidos_ReturnList(){
+        //Given
+        Producto producto= new Producto();
+        producto.setNombre("Alpaca");
+        producto.setStock(1);
+        producto.setPrecio(20);
+        productoRepository.save(producto);
+
+        Cliente cliente= new Cliente();
+        cliente.setDireccion("casa 30");
+        cliente.setEmail("rafael.gmail.com");
+        cliente.setNombre("orozo");
+        clienteRepository.save(cliente);
+
+
+        Pedido pedido= new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024,Month.JULY,10,8,20));
+        pedido.setEstado(EstatusPedido.ENTREGADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+
+        ItemPedido itemPedido= new ItemPedido();
+        itemPedido.setPedido(pedido);
+        itemPedido.setCantida(12);
+        itemPedido.setProducto(producto);
+        itemPedido.setPrecioUnitario(12);
+
+        itemPedidoRepository.save(itemPedido);
+
+
+
+
+        //When
+        Optional<List<Pedido>> pedidosFound= pedidoRepository.findByClienteWhithItemPedidos(cliente);
+        //Then
+        assertThat(pedidosFound).isPresent();
+        assertThat(pedidosFound.stream().toList()).hasSize(1);
+
+        Pedido pedidos = pedidosFound.get().get(0);
+        assertThat(pedidos).isNotNull();
+
+
     }
 
 
