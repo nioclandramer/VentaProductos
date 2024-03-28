@@ -13,4 +13,5 @@ public interface ProductoRepository extends JpaRepository <Producto,Long>{
     Optional<List<Producto>> findByStockGreaterThanEqual(Integer num);
     @Query("SELECT p FROM Producto p WHERE p.precio <= :precio AND p.Stock <= :stock")
     Optional<List<Producto>> findByPrecioLessThanEqualAndStockLessThanEqual(Integer precio, Integer stock);
+    //sdasdadsd
 }
