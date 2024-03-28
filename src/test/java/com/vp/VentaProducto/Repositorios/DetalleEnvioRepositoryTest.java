@@ -263,6 +263,7 @@ class DetalleEnvioRepositoryTest extends AstractIntegrationBDTest {
         //then
         assertThat(detalleEnvios).isNotEmpty();
         assertThat(detalleEnvios.get()).hasSize(2);
+        //t
 
 
     }
