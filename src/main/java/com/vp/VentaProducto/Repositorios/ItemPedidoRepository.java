@@ -12,5 +12,5 @@ public interface ItemPedidoRepository extends JpaRepository<ItemPedido,Long> {
     Optional<List<ItemPedido>> findByPedidoId(Long pedidoId);
     Optional<List<ItemPedido>> findByProductoId(Long productoId);
     @Query("SELECT SUM(ip.cantida*ip.precioUnitario) FROM ItemPedido ip WHERE ip.producto.id= :productoId")
-    Integer totalVentasPorProducto(@Param("productoId")Long prouctoId);
+    Optional<Integer> totalVentasPorProducto(@Param("productoId")Long prouctoId);
 }

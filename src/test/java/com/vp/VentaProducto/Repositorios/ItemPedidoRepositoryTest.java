@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -168,5 +169,151 @@ class ItemPedidoRepositoryTest extends AstractIntegrationBDTest {
         itemPedidoRepository.deleteById(itemPedidoSave.getId());
         //then
         assertThat(itemPedidoRepository.findById(itemPedidoSave.getId())).isEmpty();
+    }
+    @Test
+    void GiveAnItemPedido_WhenSearchForIdPedido_ReturnAList(){
+        //GIVEN
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        productoRepository.save(producto);
+
+        ItemPedido itemPedido=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+       itemPedidoRepository.save(itemPedido);
+        ItemPedido itemPedido2=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido2);
+        ItemPedido itemPedido3=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido3);
+
+        //When
+        Optional<List<ItemPedido>> itemPedidosfound= itemPedidoRepository.findByPedidoId(pedido.getId());
+        //Then
+        assertThat(itemPedidosfound).isNotEmpty();
+        assertThat(itemPedidosfound.get()).hasSize(3);
+    }
+    @Test
+    void GiveAnItemPedido_WhenSearchForIdProducto_ReturnAList(){
+        //Given
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        productoRepository.save(producto);
+
+        ItemPedido itemPedido=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido);
+        ItemPedido itemPedido2=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido2);
+        ItemPedido itemPedido3=ItemPedido.builder()
+                .cantida(200)
+                .precioUnitario(400000)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido3);
+        //When
+        Optional<List<ItemPedido>> itemPedidosFound= itemPedidoRepository.findByProductoId(producto.getId());
+        //Then
+        assertThat(itemPedidosFound).isNotEmpty();
+        assertThat(itemPedidosFound.get()).hasSize(3);
+
+    }
+
+    @Test
+    void GiveAItemPedido_WhenCalculaTotalDeVentasPorUnProducto(){
+        //Give
+        Cliente cliente=new Cliente();
+        cliente.setNombre("rober");
+        cliente.setDireccion("casa28");
+        cliente.setEmail("jolsagmail.com");
+        clienteRepository.save(cliente);
+
+        Pedido pedido=new Pedido();
+        pedido.setFechaPedido(LocalDateTime.of(2024, Month.AUGUST,10,8,20));
+        pedido.setEstado(EstatusPedido.ENVIADO);
+        pedido.setCliente(cliente);
+        pedidoRepository.save(pedido);
+
+        Producto producto=new Producto();
+        producto.setNombre("Crema de coc");
+        producto.setStock(12);
+        producto.setPrecio(15);
+        productoRepository.save(producto);
+
+        ItemPedido itemPedido=ItemPedido.builder()
+                .cantida(10)
+                .precioUnitario(20)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido);
+        ItemPedido itemPedido2=ItemPedido.builder()
+                .cantida(5)
+                .precioUnitario(5)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido2);
+        ItemPedido itemPedido3=ItemPedido.builder()
+                .cantida(2)
+                .precioUnitario(6)
+                .pedido(pedido)
+                .producto(producto)
+                .build();
+        itemPedidoRepository.save(itemPedido3);
+        //When
+        Optional<Integer> resultadoVentasPorProducto=itemPedidoRepository.totalVentasPorProducto(producto.getId());
+        //Then
+        assertThat(resultadoVentasPorProducto.get()).isEqualTo(237);
     }
 }
