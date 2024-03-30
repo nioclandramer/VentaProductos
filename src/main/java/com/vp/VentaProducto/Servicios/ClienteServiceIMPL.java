@@ -9,6 +9,8 @@ import com.vp.VentaProducto.Repositorios.ClienteRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClienteServiceIMPL implements ClienteService{
     private final ClienteRepository clienteRepository;
@@ -38,13 +40,19 @@ public class ClienteServiceIMPL implements ClienteService{
 
     @Override
     public ClienteDto findById(Long id) throws ClienteNotFoundException {
-        Cliente cliente=clienteRepository.findById(id).orElseThrow(()-> new ClienteNotFoundException("Cliente no existente"));
+        Cliente cliente=clienteRepository.findById(id).orElseThrow(()-> new ClienteNotFoundException("Cliente no Existe"));
         return ClienteMapper.INSTANCE.clienteToDto(cliente);
     }
 
     @Override
     public void deleteByID(Long id) throws ClienteNotFoundException {
-        Cliente cliente=clienteRepository.findById(id).orElseThrow(()-> new ClienteNotFoundException("Cliente no existente"));
+        Cliente cliente=clienteRepository.findById(id).orElseThrow(()-> new ClienteNotFoundException("Cliente no Existe"));
         clienteRepository.delete(cliente);
+    }
+
+    @Override
+    public Optional<ClienteDto> findByEmail(String email) {
+        Cliente cliente=clienteRepository.findByEmail(email).orElseThrow(()->new ClienteNotFoundException("Cliente no Existe"));
+        return Optional.ofNullable(ClienteMapper.INSTANCE.clienteToDto(cliente));
     }
 }
