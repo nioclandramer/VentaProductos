@@ -9,7 +9,9 @@ import com.vp.VentaProducto.Repositorios.ClienteRepository;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteServiceIMPL implements ClienteService{
@@ -54,5 +56,19 @@ public class ClienteServiceIMPL implements ClienteService{
     public Optional<ClienteDto> findByEmail(String email) {
         Cliente cliente=clienteRepository.findByEmail(email).orElseThrow(()->new ClienteNotFoundException("Cliente no Existe"));
         return Optional.ofNullable(ClienteMapper.INSTANCE.clienteToDto(cliente));
+    }
+
+    @Override
+    public Optional<List<ClienteDto>> findByDireccion(String direccion) {
+        List<Cliente> cliente=clienteRepository.findByDireccion(direccion).orElseThrow(()->new ClienteNotFoundException("Cliente no Existe"));
+        List<ClienteDto> clientesDto = cliente.stream().map(ClienteMapper.INSTANCE::clienteToDto).collect(Collectors.toList());
+        return Optional.of(clientesDto);
+    }
+
+    @Override
+    public Optional<List<ClienteDto>> findByNombreStartingWith(String nombre) {
+        List<Cliente> cliente=clienteRepository.findByNombreStartingWith(nombre).orElseThrow(()->new ClienteNotFoundException("Cliente no Existe"));
+        List<ClienteDto> clientesDto = cliente.stream().map(ClienteMapper.INSTANCE::clienteToDto).collect(Collectors.toList());
+        return Optional.of(clientesDto);
     }
 }

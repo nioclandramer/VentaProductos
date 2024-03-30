@@ -2,6 +2,7 @@ package com.vp.VentaProducto.Servicios;
 
 import com.vp.VentaProducto.Dtos.Cliente.ClienteDto;
 import com.vp.VentaProducto.Dtos.Cliente.ClienteToSaveDto;
+import com.vp.VentaProducto.Entidades.Cliente;
 import com.vp.VentaProducto.Exception.ClienteNotFoundException;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface ClienteService {
     ClienteDto findById(Long id)throws ClienteNotFoundException;
     void deleteByID(Long id)throws ClienteNotFoundException;
     Optional<ClienteDto> findByEmail(String email);
+    Optional<List<ClienteDto>> findByDireccion(String direccion);
+    Optional<List<ClienteDto>> findByNombreStartingWith(String nombre);
 }
