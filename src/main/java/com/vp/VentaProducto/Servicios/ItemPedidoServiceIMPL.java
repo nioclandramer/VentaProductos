@@ -6,7 +6,9 @@ import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoToSaveDto;
 import com.vp.VentaProducto.Entidades.ItemPedido;
 import com.vp.VentaProducto.Exception.ItemPedidoNotFoundException;
 import com.vp.VentaProducto.Repositorios.ItemPedidoRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ItemPedidoServiceIMPL implements ItemPedidoService{
     private final ItemPedidoRepository itemPedidoRepository;
 

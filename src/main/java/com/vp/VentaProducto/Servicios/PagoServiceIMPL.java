@@ -6,7 +6,9 @@ import com.vp.VentaProducto.Dtos.Pago.PagoToSaveDto;
 import com.vp.VentaProducto.Entidades.Pago;
 import com.vp.VentaProducto.Exception.PagoNotFoundException;
 import com.vp.VentaProducto.Repositorios.PagoRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PagoServiceIMPL implements PagoService{
     private final PagoRepository pagoRepository;
 
