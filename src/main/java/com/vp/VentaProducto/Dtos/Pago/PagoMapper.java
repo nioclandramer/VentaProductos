@@ -10,5 +10,5 @@ public interface PagoMapper {
 
     PagoDto PagoToDto(Pago pago);
     Pago dtoToPago(PagoDto dto);
-    Pago ToEntity(PagoToSaveDto pagoSDTO);
+    Pago toEntity(PagoToSaveDto pagoSDTO);
 }

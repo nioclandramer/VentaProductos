@@ -7,5 +7,5 @@ public interface ClienteMapper {
     ClienteMapper INSTANCE = Mappers.getMapper(ClienteMapper.class);
     ClienteDto clienteToDto(Cliente cliente);
     Cliente dtoToCliente(ClienteDto clienteDto);
-    Cliente ToEntity(ClienteToSaveDto clienteToSaveDto);
+    Cliente toEntity(ClienteToSaveDto clienteToSaveDto);
 }

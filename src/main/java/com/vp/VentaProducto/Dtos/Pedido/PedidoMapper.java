@@ -11,5 +11,5 @@ public interface PedidoMapper {
     PedidoDto pedidoToDto(Pedido pedido);
     Pedido dtoToPedido(PedidoDto dto);
 
-    Pedido ToEntity(PedidoToSaveDto pedidoTSDTO);
+    Pedido toEntity(PedidoToSaveDto pedidoTSDTO);
 }

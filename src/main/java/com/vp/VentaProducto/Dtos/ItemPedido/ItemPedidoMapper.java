@@ -7,5 +7,5 @@ public interface ItemPedidoMapper {
     ItemPedidoMapper INSTANCE = Mappers.getMapper(ItemPedidoMapper.class);
     ItemPedidoDto itemPedidoToDto(ItemPedido itemPedido);
     ItemPedido dtoToItemPedido(ItemPedidoDto itemPedidoDto);
-    ItemPedido toEntity(ItemPedidoMapper itemPedidoMapper);
+    ItemPedido toEntity(ItemPedidoToSaveDto itemPedidoToSaveDto);
 }
