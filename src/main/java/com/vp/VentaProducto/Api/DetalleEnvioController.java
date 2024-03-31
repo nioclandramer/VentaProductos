@@ -4,6 +4,7 @@ import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioDto;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioToSaveDTO;
 import com.vp.VentaProducto.Entidades.EstatusPedido;
 import com.vp.VentaProducto.Servicios.DetalleEnvioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/detalleEnvios")
 public class DetalleEnvioController {
     private final DetalleEnvioService detalleEnvioService;
-
+    @Autowired
     public DetalleEnvioController(DetalleEnvioService detalleEnvioService) {
         this.detalleEnvioService = detalleEnvioService;
     }
