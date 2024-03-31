@@ -16,4 +16,5 @@ public interface ClienteService {
     Optional<ClienteDto> findByEmail(String email);
     Optional<List<ClienteDto>> findByDireccion(String direccion);
     Optional<List<ClienteDto>> findByNombreStartingWith(String nombre);
+    Optional<List<ClienteDto>> getAllClientes();
 }

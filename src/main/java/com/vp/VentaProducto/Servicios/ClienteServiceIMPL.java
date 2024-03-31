@@ -71,4 +71,11 @@ public class ClienteServiceIMPL implements ClienteService{
         List<ClienteDto> clientesDto = cliente.stream().map(ClienteMapper.INSTANCE::clienteToDto).collect(Collectors.toList());
         return Optional.of(clientesDto);
     }
+
+    @Override
+    public Optional<List<ClienteDto>> getAllClientes() {
+        List<Cliente> cliente=clienteRepository.findAll();
+        List<ClienteDto> clientesDto = cliente.stream().map(ClienteMapper.INSTANCE::clienteToDto).collect(Collectors.toList());
+        return Optional.of(clientesDto);
+    }
 }
