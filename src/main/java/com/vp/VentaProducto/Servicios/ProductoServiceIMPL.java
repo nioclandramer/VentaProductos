@@ -10,6 +10,10 @@ import com.vp.VentaProducto.Exception.ProductoNotFoundException;
 import com.vp.VentaProducto.Repositorios.ProductoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductoServiceIMPL implements ProductoService{
     private final ProductoRepository productoRepository;
@@ -47,5 +51,32 @@ public class ProductoServiceIMPL implements ProductoService{
     public void deleteById(Long id) {
         Producto producto=productoRepository.findById(id).orElseThrow(()->new ProductoNotFoundException("Producto No Encontrado"));
         productoRepository.delete(producto);
+    }
+
+    @Override
+    public Optional<List<ProductoDto>> findByNombreContainingIgnoreCase(String termino) {
+        List<Producto> productos= productoRepository.findByNombreContainingIgnoreCase(termino)
+                .orElseThrow(()-> new ProductoNotFoundException("Producto No encontrado"));
+        List<ProductoDto>productoDtos=productos.stream().map(ProductoMapper.INSTANCE::productoToDto)
+                .collect(Collectors.toList());
+        return Optional.of(productoDtos);
+    }
+
+    @Override
+    public Optional<List<ProductoDto>> findByProductStockEqual(Integer num) {
+        List<Producto> productos= productoRepository.findByProductStockEqual(num)
+                .orElseThrow(()-> new ProductoNotFoundException("Producto No encontrado"));
+        List<ProductoDto>productoDtos=productos.stream().map(ProductoMapper.INSTANCE::productoToDto)
+                .collect(Collectors.toList());
+        return Optional.of(productoDtos);
+    }
+
+    @Override
+    public Optional<List<ProductoDto>> findByPrecioAndStock(Integer precio, Integer stock) {
+        List<Producto> productos= productoRepository.findByPrecioAndStock(precio,stock)
+                .orElseThrow(()-> new ProductoNotFoundException("Producto No encontrado"));
+        List<ProductoDto>productoDtos=productos.stream().map(ProductoMapper.INSTANCE::productoToDto)
+                .collect(Collectors.toList());
+        return Optional.of(productoDtos);
     }
 }

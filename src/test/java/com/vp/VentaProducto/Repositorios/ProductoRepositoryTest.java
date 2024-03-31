@@ -96,9 +96,10 @@ class ProductoRepositoryTest extends AstractIntegrationBDTest {
         productoRepository.save(producto1);
         productoRepository.save(producto2);
         //When
-        List<Producto> productosFound= productoRepository.findByNombreContainingIgnoreCase("leches");
-        assertThat(productosFound.size()).isEqualTo(1);
-        assertThat(productosFound).isNotEmpty();
+        Optional<List<Producto>> productosFound= productoRepository.findByNombreContainingIgnoreCase("leches");
+        List<Producto> productos = productosFound.orElseThrow();
+        assertThat(productos.size()).isEqualTo(1);
+        assertThat(productos).isNotEmpty();
 
     }
     @Test
