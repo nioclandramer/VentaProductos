@@ -3,10 +3,17 @@ package com.vp.VentaProducto.Servicios;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoDto;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoMapper;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoToSaveDto;
+import com.vp.VentaProducto.Entidades.Cliente;
+import com.vp.VentaProducto.Entidades.EstatusPedido;
 import com.vp.VentaProducto.Entidades.Pedido;
 import com.vp.VentaProducto.Exception.PedidoNotFoundException;
 import com.vp.VentaProducto.Repositorios.PedidoRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PedidoServiceIMPL implements PedidoService{
@@ -47,5 +54,33 @@ public class PedidoServiceIMPL implements PedidoService{
     public void deleteById(Long id) {
         Pedido pedido=pedidoRepository.findById(id).orElseThrow(()->new PedidoNotFoundException("Pedido No Encontrado"));
         pedidoRepository.delete(pedido);
+    }
+
+    @Override
+    public Optional<List<PedidoDto>> findByFechaPedidoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+       List<Pedido> pedidos= pedidoRepository.findByFechaPedidoBetween(fechaInicio,fechaFin)
+               .orElseThrow(()-> new PedidoNotFoundException("No se encontaron pedidos en dichas fechas"));
+       List<PedidoDto>pedidoDtos=pedidos.stream().map(PedidoMapper.INSTANCE::pedidoToDto)
+               .collect(Collectors.toList());
+
+        return Optional.of(pedidoDtos);
+    }
+
+    @Override
+    public Optional<List<PedidoDto>> findByClienteAndEstado(Long clienteId, EstatusPedido estatusPedido) {
+      List<Pedido> pedidos= pedidoRepository.findByClienteAndEstado(clienteId,estatusPedido)
+              .orElseThrow(()-> new PedidoNotFoundException("No se encontraron pedidos"));
+      List<PedidoDto>pedidoDtos=pedidos.stream().map(PedidoMapper.INSTANCE::pedidoToDto).collect(Collectors.toList());
+
+        return Optional.of(pedidoDtos);
+    }
+
+    @Override
+    public Optional<List<PedidoDto>> findByClienteWhithItemPedidos(Cliente cliente) {
+       List<Pedido>pedidos=pedidoRepository.findByClienteWhithItemPedidos(cliente)
+               .orElseThrow(()-> new PedidoNotFoundException("No se encontraon pedidos"));
+       List<PedidoDto> pedidoDtos=pedidos.stream().map(PedidoMapper.INSTANCE::pedidoToDto)
+               .collect(Collectors.toList());
+        return Optional.of(pedidoDtos);
     }
 }

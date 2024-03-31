@@ -4,9 +4,14 @@ import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioDto;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioMapper;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioToSaveDTO;
 import com.vp.VentaProducto.Entidades.DetalleEnvio;
+import com.vp.VentaProducto.Entidades.EstatusPedido;
 import com.vp.VentaProducto.Exception.DetalleEnvioNotFoundException;
 import com.vp.VentaProducto.Repositorios.DetalleEnvioRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DetalleEnvioServiceIMPL implements DetalleEnvioService{
@@ -45,5 +50,31 @@ public class DetalleEnvioServiceIMPL implements DetalleEnvioService{
     public void deleteById(Long id) {
         DetalleEnvio detalleEnvio=detalleEnvioRepository.findById(id).orElseThrow(()-> new DetalleEnvioNotFoundException("No se encontro el Detalle de Envio"));
         detalleEnvioRepository.delete(detalleEnvio);
+    }
+
+    @Override
+    public Optional<DetalleEnvioDto> findByPedidoId(Long pedidoId) {
+        DetalleEnvio detalleEnvio= detalleEnvioRepository.findByPedidoId(pedidoId)
+                .orElseThrow(()->new DetalleEnvioNotFoundException("No se encontró detalle del envio"));
+        return Optional.of(DetalleEnvioMapper.INSTANCE.detalleEnvioToDto(detalleEnvio));
+    }
+
+    @Override
+    public Optional<List<DetalleEnvioDto>> findByTransportadora(String transportadora) {
+        List<DetalleEnvio> detalleEnvios= detalleEnvioRepository.findByTransportadora(transportadora)
+                .orElseThrow(()-> new DetalleEnvioNotFoundException("No se encontró detalle del envio"));
+        List<DetalleEnvioDto> detalleEnvioDtos= detalleEnvios.stream().map(DetalleEnvioMapper.INSTANCE::detalleEnvioToDto)
+                .collect(Collectors.toList());
+        return Optional.of(detalleEnvioDtos);
+    }
+
+    @Override
+    public Optional<List<DetalleEnvioDto>> findByEstado(EstatusPedido estado) {
+        List<DetalleEnvio> detalleEnvios= detalleEnvioRepository.findByestado(estado)
+                .orElseThrow(()-> new DetalleEnvioNotFoundException("No se encontró detalle del envio"));
+        List<DetalleEnvioDto> detalleEnvioDtos=detalleEnvios.stream().map(DetalleEnvioMapper.INSTANCE::detalleEnvioToDto)
+                .collect(Collectors.toList());
+
+        return Optional.of(detalleEnvioDtos);
     }
 }
