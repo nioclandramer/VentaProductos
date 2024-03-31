@@ -1,5 +1,7 @@
 package com.vp.VentaProducto.Servicios;
 
+import com.vp.VentaProducto.Dtos.Cliente.ClienteDto;
+import com.vp.VentaProducto.Dtos.Cliente.ClienteMapper;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoDto;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoMapper;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoToSaveDto;
@@ -76,7 +78,8 @@ public class PedidoServiceIMPL implements PedidoService{
     }
 
     @Override
-    public Optional<List<PedidoDto>> findByClienteWhithItemPedidos(Cliente cliente) {
+    public Optional<List<PedidoDto>> findByClienteWhithItemPedidos(ClienteDto cliente1) {
+        Cliente cliente = ClienteMapper.INSTANCE.dtoToCliente(cliente1);
        List<Pedido>pedidos=pedidoRepository.findByClienteWhithItemPedidos(cliente)
                .orElseThrow(()-> new PedidoNotFoundException("No se encontraon pedidos"));
        List<PedidoDto> pedidoDtos=pedidos.stream().map(PedidoMapper.INSTANCE::pedidoToDto)
@@ -85,7 +88,7 @@ public class PedidoServiceIMPL implements PedidoService{
     }
 
     @Override
-    public Optional<List<PedidoDto>> getPedido() {
+    public Optional<List<PedidoDto>> getAllPedido() {
         List<Pedido> pedido=pedidoRepository.findAll();
         List<PedidoDto> pedidoDto=pedido.stream().map(PedidoMapper.INSTANCE::pedidoToDto).collect(Collectors.toList());
         return Optional.of(pedidoDto);
