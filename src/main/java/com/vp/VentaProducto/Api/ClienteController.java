@@ -3,6 +3,7 @@ package com.vp.VentaProducto.Api;
 import com.vp.VentaProducto.Dtos.Cliente.ClienteDto;
 import com.vp.VentaProducto.Dtos.Cliente.ClienteToSaveDto;
 import com.vp.VentaProducto.Servicios.ClienteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("Api/v1/clientes")
+@RequestMapping("api/v1/clientes")
 public class ClienteController {
     private final ClienteService clienteService;
-
+     @Autowired
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
@@ -42,21 +43,21 @@ public class ClienteController {
         return  ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/searchT")
-    public ResponseEntity<Optional<ClienteDto>>searchClienteEmail(@RequestParam("searchT") String emailT){
-        Optional<ClienteDto> cliente=clienteService.findByEmail(emailT);
+    @GetMapping("/email")
+    public ResponseEntity<Optional<ClienteDto>>searchClienteEmail(@RequestParam("email") String email){
+        Optional<ClienteDto> cliente=clienteService.findByEmail(email);
         return ResponseEntity.ok(cliente);
     }
 
-    @GetMapping("/searchT")
-    public ResponseEntity<Optional<List<ClienteDto>>>searchClientesDireccion(@RequestParam("searchT") String direccionT){
-        Optional<List<ClienteDto>> cliente=clienteService.findByDireccion(direccionT);
+    @GetMapping("/direccion")
+    public ResponseEntity<Optional<List<ClienteDto>>>searchClientesDireccion(@RequestParam("direccion") String direccion){
+        Optional<List<ClienteDto>> cliente=clienteService.findByDireccion(direccion);
         return ResponseEntity.ok(cliente);
     }
 
-    @GetMapping("/searchT")
-    public ResponseEntity<Optional<List<ClienteDto>>>searchClientesNombreStartingWith(@RequestParam("searchT") String nombreT){
-        Optional<List<ClienteDto>> cliente=clienteService.findByNombreStartingWith(nombreT);
+    @GetMapping("/searchName")
+    public ResponseEntity<Optional<List<ClienteDto>>>searchClientesNombreStartingWith(@RequestParam("searchName") String searchName){
+        Optional<List<ClienteDto>> cliente=clienteService.findByNombreStartingWith(searchName);
         return ResponseEntity.ok(cliente);
     }
 

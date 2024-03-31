@@ -7,6 +7,7 @@ import com.vp.VentaProducto.Entidades.Cliente;
 import com.vp.VentaProducto.Exception.ClienteNotFoundException;
 import com.vp.VentaProducto.Repositorios.ClienteRepository;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
