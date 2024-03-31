@@ -18,4 +18,5 @@ public interface PedidoRepository extends JpaRepository<Pedido,Long> {
     @Query("SELECT p from Pedido p JOIN FETCH p.itemPedidos WHERE p.cliente = :cliente")
     Optional<List<Pedido>> findByClienteWhithItemPedidos(Cliente cliente);
 
+
 }
