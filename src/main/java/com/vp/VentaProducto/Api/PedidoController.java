@@ -3,12 +3,9 @@ package com.vp.VentaProducto.Api;
 import com.vp.VentaProducto.Dtos.Cliente.ClienteDto;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoDto;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoToSaveDto;
-import com.vp.VentaProducto.Dtos.Producto.ProductoDto;
-import com.vp.VentaProducto.Dtos.Producto.ProductoToSaveDto;
 import com.vp.VentaProducto.Servicios.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +32,7 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<Void> update(@RequestBody PedidoToSaveDto pedido){
         pedidoService.actualizarPedido(pedido);
         return ResponseEntity.noContent().build();
