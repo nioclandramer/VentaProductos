@@ -4,6 +4,7 @@ package com.vp.VentaProducto.Api;
 import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoDto;
 import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoToSaveDto;
 import com.vp.VentaProducto.Servicios.ItemPedidoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/itemsPedidos")
 public class ItemPedidoController {
     private final ItemPedidoService itemPedidoService;
-
+     @Autowired
     public ItemPedidoController(ItemPedidoService itemPedidoService) {
         this.itemPedidoService = itemPedidoService;
     }
@@ -56,9 +57,9 @@ public class ItemPedidoController {
         return ResponseEntity.ok(itemPedido);
     }
 
-    @GetMapping("/{productoId}" )
-    public ResponseEntity<Optional<Integer>> getItemPedidoByTotalVentasPorProducto(@PathVariable Long productoId){
-        Optional<Integer> itemPedido=itemPedidoService.totalVentasPorProducto(productoId);
+    @GetMapping("/{productoIdVentas}" )
+    public ResponseEntity<Optional<Integer>> getItemPedidoByTotalVentasPorProducto(@PathVariable Long productoIdVentas){
+        Optional<Integer> itemPedido=itemPedidoService.totalVentasPorProducto(productoIdVentas);
         return ResponseEntity.ok(itemPedido);
     }
 

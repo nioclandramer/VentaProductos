@@ -52,7 +52,7 @@ public class PedidoController {
         Optional<List<PedidoDto>>pedidoDtos=pedidoService.findByFechaPedidoBetween(finicio,ffinal);
         return  ResponseEntity.ok(pedidoDtos);
     }
-    @GetMapping("/Cliente")
+    @GetMapping("/Cliente")//Cambiar mañana
     public ResponseEntity<Optional<List<PedidoDto>>> GetPedidosByCliente(@RequestBody ClienteDto cliente){
         Optional<List<PedidoDto>> pedidoDtos=pedidoService.findByClienteWhithItemPedidos(cliente);
         return ResponseEntity.ok(pedidoDtos);
