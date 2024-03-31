@@ -36,7 +36,6 @@ public class ProductoServiceIMPL implements ProductoService{
         productoExiste.setNombre(producto1.getNombre());
         productoExiste.setPrecio(producto1.getPrecio());
         productoExiste.setStock(producto1.getStock());
-        productoExiste.setItemPedidos(producto1.getItemPedidos());
         productoExiste=productoRepository.save(productoExiste);
         return ProductoMapper.INSTANCE.productoToDto(productoExiste);
     }
