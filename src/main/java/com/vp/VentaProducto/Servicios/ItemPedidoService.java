@@ -14,4 +14,5 @@ public interface ItemPedidoService {
     Optional<List<ItemPedidoDto>> findByPedidoId(Long pedidoId);
     Optional<List<ItemPedidoDto>> findByProductoId(Long productoId);
     Optional<Integer> totalVentasPorProducto(Long ProductoId);
+    Optional<List<ItemPedidoDto>> getItemPedido();
 }

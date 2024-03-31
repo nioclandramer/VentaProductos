@@ -69,4 +69,11 @@ public class PagoServiceIMPL implements PagoService{
         Pago pago=pagoRepository.findByIdAndMetodoDePago(Id,metodoDePago).orElseThrow(()->new PagoNotFoundException("Pago No Encontrado"));
         return Optional.ofNullable(PagoMapper.INSTANCE.PagoToDto(pago));
     }
+
+    @Override
+    public Optional<List<PagoDto>> getPago() {
+        List<Pago> pago=pagoRepository.findAll();
+        List<PagoDto> pagoDto=pago.stream().map(PagoMapper.INSTANCE::PagoToDto).collect(Collectors.toList());
+        return Optional.of(pagoDto);
+    }
 }

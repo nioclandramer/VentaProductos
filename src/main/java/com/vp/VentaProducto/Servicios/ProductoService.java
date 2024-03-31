@@ -14,8 +14,7 @@ public interface ProductoService {
     ProductoDto findById(Long id);
     void deleteById(Long id);
     Optional<List<ProductoDto>> findByNombreContainingIgnoreCase(String termino);
-
     Optional<List<ProductoDto>> findByProductStockEqual(Integer num);
-
     Optional<List<ProductoDto>> findByPrecioAndStock(Integer precio, Integer stock);
+    Optional<List<ProductoDto>> getProducto();
 }

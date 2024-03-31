@@ -16,4 +16,5 @@ public interface PagoService {
     void deleteById(Long id);
     Optional<List<PagoDto>> findByFechaPagoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFinal);
     Optional<PagoDto> findByIdAndMetodoDePago(Long Id, MetodoDePago metodoDePago);
+    Optional<List<PagoDto>> getPago();
 }

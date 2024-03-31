@@ -15,5 +15,6 @@ public interface DetalleEnvioService {
     Optional<DetalleEnvioDto> findByPedidoId(Long pedidoId);
     Optional<List<DetalleEnvioDto>> findByTransportadora(String transportadora);
     Optional<List<DetalleEnvioDto>> findByEstado(EstatusPedido estado);
+    Optional<List<DetalleEnvioDto>> getDestalleEnvio();
 
 }

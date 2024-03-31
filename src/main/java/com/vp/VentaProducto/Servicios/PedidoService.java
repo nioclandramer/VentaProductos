@@ -15,8 +15,8 @@ public interface PedidoService {
     PedidoDto actualizarPedido(PedidoToSaveDto pedido);
     PedidoDto findById(Long id);
     void deleteById(Long id);
-
     Optional<List<PedidoDto>> findByFechaPedidoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFin);
     Optional<List<PedidoDto>> findByClienteAndEstado(Long clienteId, EstatusPedido estatusPedido);
-    Optional<List<PedidoDto>>findByClienteWhithItemPedidos(Cliente cliente);
+    Optional<List<PedidoDto>> findByClienteWhithItemPedidos(Cliente cliente);
+    Optional<List<PedidoDto>> getPedido();
 }

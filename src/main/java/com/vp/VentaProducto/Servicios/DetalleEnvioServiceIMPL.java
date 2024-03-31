@@ -77,4 +77,11 @@ public class DetalleEnvioServiceIMPL implements DetalleEnvioService{
 
         return Optional.of(detalleEnvioDtos);
     }
+
+    @Override
+    public Optional<List<DetalleEnvioDto>> getDestalleEnvio() {
+        List<DetalleEnvio> detalleEnvio=detalleEnvioRepository.findAll();
+        List<DetalleEnvioDto> detalleEnvioDtos=detalleEnvio.stream().map(DetalleEnvioMapper.INSTANCE::detalleEnvioToDto).collect(Collectors.toList());
+        return Optional.of(detalleEnvioDtos);
+    }
 }
