@@ -77,4 +77,11 @@ public class ItemPedidoServiceIMPL implements ItemPedidoService{
     public Optional<Integer> totalVentasPorProducto(Long ProductoId) {
         return itemPedidoRepository.totalVentasPorProducto(ProductoId);
     }
+
+    @Override
+    public Optional<List<ItemPedidoDto>> getItemPedido() {
+        List<ItemPedido> itemPedido=itemPedidoRepository.findAll();
+        List<ItemPedidoDto> itemPedidoDto=itemPedido.stream().map(ItemPedidoMapper.INSTANCE::itemPedidoToDto).collect(Collectors.toList());
+        return Optional.of(itemPedidoDto);
+    }
 }

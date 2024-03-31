@@ -79,4 +79,11 @@ public class ProductoServiceIMPL implements ProductoService{
                 .collect(Collectors.toList());
         return Optional.of(productoDtos);
     }
+
+    @Override
+    public Optional<List<ProductoDto>> getProducto() {
+        List<Producto> producto=productoRepository.findAll();
+        List<ProductoDto> productoDto=producto.stream().map(ProductoMapper.INSTANCE::productoToDto).collect(Collectors.toList());
+        return Optional.of(productoDto);
+    }
 }

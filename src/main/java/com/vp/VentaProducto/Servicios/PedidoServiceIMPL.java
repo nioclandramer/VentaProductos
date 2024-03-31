@@ -83,4 +83,11 @@ public class PedidoServiceIMPL implements PedidoService{
                .collect(Collectors.toList());
         return Optional.of(pedidoDtos);
     }
+
+    @Override
+    public Optional<List<PedidoDto>> getPedido() {
+        List<Pedido> pedido=pedidoRepository.findAll();
+        List<PedidoDto> pedidoDto=pedido.stream().map(PedidoMapper.INSTANCE::pedidoToDto).collect(Collectors.toList());
+        return Optional.of(pedidoDto);
+    }
 }
