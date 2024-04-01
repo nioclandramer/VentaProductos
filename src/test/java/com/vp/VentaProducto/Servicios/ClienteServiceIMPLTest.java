@@ -110,9 +110,9 @@ class ClienteServiceIMPLTest {
 
     @Test
     void GiveClienteId_WhenDeleteByClienteId_thenClienteIsDeleted(){
-        Long clienteID=1L;
-        willDoNothing().given(clienteRepository).delete(any());
-        clienteService.deleteByID(clienteID);
-        verify(clienteRepository, times(1)).delete(any());
+        given(clienteRepository.findById(1L)).willReturn(Optional.of(cliente));
+        willDoNothing().given(clienteRepository).delete(cliente);
+        clienteService.deleteByID(1L);
+        verify(clienteRepository, times(1)).delete(cliente);
     }
 }

@@ -39,9 +39,6 @@ public class PedidoServiceIMPL implements PedidoService{
         pedidoExiste.setFechaPedido(pedido1.getFechaPedido());
         pedidoExiste.setEstado(pedido1.getEstado());
         pedidoExiste.setCliente(pedido1.getCliente());
-        pedidoExiste.setItemPedidos(pedido1.getItemPedidos());
-        pedidoExiste.setDetalleEnvio(pedido1.getDetalleEnvio());
-        pedidoExiste.setPago(pedido1.getPago());
         pedidoExiste=pedidoRepository.save(pedidoExiste);
         return PedidoMapper.INSTANCE.pedidoToDto(pedidoExiste);
     }

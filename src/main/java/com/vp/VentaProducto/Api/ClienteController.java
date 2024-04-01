@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping("api/v1/clientes")
 public class ClienteController {
     private final ClienteService clienteService;
-     @Autowired
+
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }

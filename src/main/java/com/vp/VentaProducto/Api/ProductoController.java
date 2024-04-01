@@ -15,7 +15,6 @@ import java.util.Optional;
 @RequestMapping("/api/v1/productos")
 public class ProductoController {
     private final ProductoService productoService;
-    @Autowired
     public ProductoController(ProductoService productoService){
         this.productoService=productoService;
     }

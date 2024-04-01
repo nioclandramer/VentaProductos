@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/itemsPedidos")
 public class ItemPedidoController {
     private final ItemPedidoService itemPedidoService;
-     @Autowired
+
     public ItemPedidoController(ItemPedidoService itemPedidoService) {
         this.itemPedidoService = itemPedidoService;
     }

@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/detalleEnvios")
 public class DetalleEnvioController {
     private final DetalleEnvioService detalleEnvioService;
-    @Autowired
+
     public DetalleEnvioController(DetalleEnvioService detalleEnvioService) {
         this.detalleEnvioService = detalleEnvioService;
     }

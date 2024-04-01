@@ -4,6 +4,7 @@ import com.vp.VentaProducto.Dtos.Pago.PagoDto;
 import com.vp.VentaProducto.Dtos.Pago.PagoToSaveDto;
 import com.vp.VentaProducto.Entidades.MetodoDePago;
 import com.vp.VentaProducto.Servicios.PagoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class PagoController {
     private final PagoService pagoService;
 
+ @Autowired
     public PagoController(PagoService pagoService) {
         this.pagoService = pagoService;
     }
