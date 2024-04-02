@@ -18,6 +18,11 @@ public class ProductoController {
     public ProductoController(ProductoService productoService){
         this.productoService=productoService;
     }
+    @GetMapping
+    public ResponseEntity<Optional<List<ProductoDto>>> getProductos(){
+        Optional<List<ProductoDto>> productoDtos= productoService.getProducto();
+        return ResponseEntity.ok().body(productoDtos);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProductoDto>> getProductoByID(@PathVariable Long id){
       Optional<ProductoDto> productoDto= Optional.ofNullable(productoService.findById(id));

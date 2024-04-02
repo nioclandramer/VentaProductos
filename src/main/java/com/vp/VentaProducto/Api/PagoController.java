@@ -35,9 +35,9 @@ public class PagoController {
         return ResponseEntity.ok(pago);
     }
 
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody PagoToSaveDto pago){
-        pagoService.actualizarPago(pago);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable("id")Long id ,@RequestBody PagoToSaveDto pago){
+        pagoService.actualizarPago(id,pago);
         return ResponseEntity.noContent().build();
     }
 

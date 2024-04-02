@@ -34,6 +34,6 @@ public class Pedido {
     @OneToOne(mappedBy = "pedido")
     private DetalleEnvio detalleEnvio;
 
-    @OneToOne(mappedBy = "pedido")
+    @OneToOne(fetch = FetchType.EAGER,mappedBy = "pedido")
     private Pago pago;
 }

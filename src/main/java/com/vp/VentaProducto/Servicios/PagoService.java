@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface PagoService {
     PagoDto guardarPago(PagoToSaveDto pago);
-    PagoDto actualizarPago(PagoToSaveDto pago);
+    PagoDto actualizarPago(Long id,PagoToSaveDto pago);
     PagoDto findById(Long id);
     void deleteById(Long id);
     Optional<List<PagoDto>> findByFechaPagoBetween(LocalDateTime fechaInicio, LocalDateTime fechaFinal);

@@ -34,15 +34,17 @@ public class PagoServiceIMPL implements PagoService{
     }
 
     @Override
-    public PagoDto actualizarPago(PagoToSaveDto pago) {
+    public PagoDto actualizarPago(Long id,PagoToSaveDto pago) {
         Pago pago1= PagoMapper.INSTANCE.toEntity(pago);
-        Pago pagoExiste=pagoRepository.findById(pago.id()).orElseThrow(()->new PagoNotFoundException("Pago No Encontrado"));
+        Pago pagoExiste=pagoRepository.findById(id).orElseThrow(()->new PagoNotFoundException("Pago No Encontrado"));
         pagoExiste.setTotalPago(pago1.getTotalPago());
         pagoExiste.setMetodoDePago(pago1.getMetodoDePago());
         pagoExiste.setFechaPago(pago1.getFechaPago());
         pagoExiste.setPedido(pago1.getPedido());
-        pagoExiste=pagoRepository.save(pagoExiste);
-        return PagoMapper.INSTANCE.PagoToDto(pagoExiste);
+
+        Pago pagoGuardado=pagoRepository.save(pagoExiste);
+
+        return PagoMapper.INSTANCE.PagoToDto(pagoGuardado);
     }
 
     @Override
