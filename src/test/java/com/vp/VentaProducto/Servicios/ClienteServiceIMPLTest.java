@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -114,5 +115,29 @@ class ClienteServiceIMPLTest {
         willDoNothing().given(clienteRepository).delete(cliente);
         clienteService.deleteByID(1L);
         verify(clienteRepository, times(1)).delete(cliente);
+    }
+
+    @Test
+    void GiveCliente_whenFindByEmail_thenReturnTheClienteIsFound(){
+        cliente.setId(1L);
+        cliente.setNombre("test1");
+        cliente.setEmail("test1@gmail");
+        cliente.setDireccion("test1direccion");
+        cliente.setPedidos(null);
+        given(clienteRepository.save(any())).willReturn(cliente);
+        ClienteToSaveDto clienteGuardado=new ClienteToSaveDto(
+                1L,
+                "test1",
+                "test1@gmail",
+                "test1direccion");
+        ClienteDto clienteDto=clienteService.guardarCliente(clienteGuardado);
+        given(clienteRepository.findByEmail(clienteDto.email())).willReturn(Optional.ofNullable(cliente));
+        clienteDto=clienteService.findByEmail(clienteDto.email()).orElseThrow(()-> new ClienteNotFoundException("no"));
+        assertThat(clienteDto).isNotNull();
+    }
+
+    @Test
+    void GiveCliente_whenFindByDireccion_thenReturnListOfClient(){
+
     }
 }
