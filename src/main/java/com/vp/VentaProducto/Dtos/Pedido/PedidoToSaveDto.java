@@ -12,9 +12,6 @@ import java.util.List;
 public record PedidoToSaveDto(Long id,
                               LocalDateTime fechaPedido,
                               EstatusPedido estado,
-                              ClienteDto cliente,
-                              List<ItemPedidoDto> itemPedidoDtos,
-                              DetalleEnvioDto detalleEnvioDto,
-                              PagoDto pagoDto)
+                              ClienteDto cliente)
 {
 }
