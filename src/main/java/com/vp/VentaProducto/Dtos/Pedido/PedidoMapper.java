@@ -14,9 +14,6 @@ public interface PedidoMapper {
     @Mapping(source = "pago", target = "pagoDto")
     PedidoDto pedidoToDto(Pedido pedido);
     Pedido dtoToPedido(PedidoDto dto);
-    @Mapping(source = "cliente", target = "cliente")
-    @Mapping(source = "itemPedidoDtos", target = "itemPedidos")
-    @Mapping(source = "detalleEnvioDto", target = "detalleEnvio")
-    @Mapping(source = "pagoDto", target = "pago")
+
     Pedido ToEntity(PedidoToSaveDto pedidoTSDTO);
 }
