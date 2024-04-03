@@ -4,7 +4,12 @@ import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoDto;
 import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoMapper;
 import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoMapperImpl;
 import com.vp.VentaProducto.Dtos.ItemPedido.ItemPedidoToSaveDto;
+import com.vp.VentaProducto.Dtos.Pedido.PedidoDto;
+import com.vp.VentaProducto.Dtos.Producto.ProductoDto;
+import com.vp.VentaProducto.Entidades.EstatusPedido;
 import com.vp.VentaProducto.Entidades.ItemPedido;
+import com.vp.VentaProducto.Entidades.Pedido;
+import com.vp.VentaProducto.Entidades.Producto;
 import com.vp.VentaProducto.Exception.ItemPedidoNotFoundException;
 import com.vp.VentaProducto.Repositorios.ItemPedidoRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +19,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +58,8 @@ class ItemPedidoServiceIMPLTest {
         itemPedido.setProducto(null);
         given(itemPedidoRepository.save(any())).willReturn(itemPedido);
         //Give
-        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(1L,
+        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
+                1L,
                 14,
                 1234,
                 null,
@@ -72,7 +80,8 @@ class ItemPedidoServiceIMPLTest {
         itemPedido.setProducto(null);
         given(itemPedidoRepository.save(any())).willReturn(itemPedido);
         //Give
-        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(1L,
+        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
+                1L,
                 14,
                 1234,
                 null,
@@ -105,47 +114,83 @@ class ItemPedidoServiceIMPLTest {
     }
 
     @Test
-    void deleteById() {
+    void GiveItemPedidoId_WhenDeleteByItemPedidoId_thenItemPedidoIsDeleted() {
         //Give
-
+        given(itemPedidoRepository.findById(1L)).willReturn(Optional.of(itemPedido));
+        willDoNothing().given(itemPedidoRepository).delete(itemPedido);
         //When
-
+        itemPedidoService.deleteById(1L);
         //then
+        verify(itemPedidoRepository,times(1)).delete(itemPedido);
     }
 
     @Test
-    void findByPedidoId() {
+    void GiveItemPedidoId_whenFindItemPedidoByPedidoId_thenReturnItemPedidofindBy() {
+        itemPedido.setId(1L);
+        itemPedido.setCantida(14);
+        itemPedido.setPrecioUnitario(1234);
+        itemPedido.setPedido(new Pedido(1L, LocalDateTime.of(2020,11,12,12,12), EstatusPedido.PENDIENTE,null,null,null,null));
+        itemPedido.setProducto(null);
+        given(itemPedidoRepository.save(any())).willReturn(itemPedido);
+        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
+                1L,
+                14,
+                1234,
+                new PedidoDto(1L, LocalDateTime.of(2020,11,12,12,12), EstatusPedido.PENDIENTE,null,null,null,null),
+                null);
+        itemPedidoService.guardarItemPedido(itemPedidoGuardado);
         //Give
-
+        given(itemPedidoRepository.findByPedidoId(itemPedidoGuardado.pedidoDto().id())).willReturn(Optional.of(List.of(itemPedido)));
         //When
-
+        Optional<List<ItemPedidoDto>> itemPedidoDto=itemPedidoService.findByPedidoId(1L);
         //then
+        assertThat(itemPedidoDto).isNotNull();
     }
 
     @Test
-    void findByProductoId() {
+    void GiveItemPedidoId_whenFindItemPedidoByProductoId_thenReturnItemPedidofindBy() {
+        itemPedido.setId(1L);
+        itemPedido.setCantida(14);
+        itemPedido.setPrecioUnitario(1234);
+        itemPedido.setPedido(null);
+        itemPedido.setProducto(new Producto(1L,"coco",12,11,null));
+        given(itemPedidoRepository.save(any())).willReturn(itemPedido);
+        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
+                1L,
+                14,
+                1234,
+                null,
+                new ProductoDto(1L,"coco",12,11));
+        itemPedidoService.guardarItemPedido(itemPedidoGuardado);
         //Give
-
+        given(itemPedidoRepository.findByProductoId(itemPedidoGuardado.productoDto().id())).willReturn(Optional.of(List.of(itemPedido)));
         //When
-
+        Optional<List<ItemPedidoDto>> itemPedidoDto=itemPedidoService.findByProductoId(1L);
         //then
+        assertThat(itemPedidoDto).isNotNull();
     }
 
     @Test
     void totalVentasPorProducto() {
-        //Give
-
-        //When
-
-        //then
+        //Optional<List<ItemPedido>> list=itemPedidoRepository.findByProductoId(1L);
+        itemPedido.setId(1L);
+        itemPedido.setCantida(14);
+        itemPedido.setPrecioUnitario(1234);
+        itemPedido.setPedido(null);
+        itemPedido.setProducto(new Producto(1L,"coco",12,11,null));
+        given(itemPedidoRepository.save(any())).willReturn(itemPedido);
+        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
+                1L,
+                14,
+                1234,
+                null,
+                new ProductoDto(1L,"coco",12,11));
+        itemPedidoService.guardarItemPedido(itemPedidoGuardado);
     }
 
     @Test
     void getItemPedido() {
-        //Give
-
-        //When
-
-        //then
+        Optional<List<ItemPedidoDto>> itemPedidoDto=itemPedidoService.getItemPedido();
+        assertThat(itemPedidoDto).isNotNull();
     }
 }

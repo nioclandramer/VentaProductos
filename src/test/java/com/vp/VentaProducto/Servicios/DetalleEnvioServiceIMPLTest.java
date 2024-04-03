@@ -4,6 +4,7 @@ import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioDto;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioMapper;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioMapperImpl;
 import com.vp.VentaProducto.Dtos.DetalleEnvio.DetalleEnvioToSaveDTO;
+import com.vp.VentaProducto.Dtos.Pedido.PedidoDto;
 import com.vp.VentaProducto.Dtos.Pedido.PedidoToSaveDto;
 import com.vp.VentaProducto.Entidades.DetalleEnvio;
 import com.vp.VentaProducto.Entidades.EstatusPedido;
@@ -158,20 +159,6 @@ class DetalleEnvioServiceIMPLTest {
 
     @Test
     void GiveDetalleEnvio_whenFindByPedidoId_thenReturnDetalleEnvio() {
-        /*pedido.setId(1L);
-        pedido.setPago(null);
-        pedido.setItemPedidos(null);
-        pedido.setDetalleEnvio(null);
-        pedido.setEstado(EstatusPedido.PENDIENTE);
-        pedido.setCliente(null);
-        pedido.setFechaPedido(LocalDateTime.of(2020,11,12,12,12));
-        pedidoRepository.save(pedido);
-        PedidoToSaveDto pedidpGuardado=new PedidoToSaveDto(
-                1L,
-                LocalDateTime.of(2020,11,12,12,12),
-                EstatusPedido.PENDIENTE,
-                null);
-        pedidoService.guardarPedido(pedidpGuardado);*/
         detalleEnvio.setId(1L);
         detalleEnvio.setNumeroGuia(123444);
         detalleEnvio.setTransportadora("testtransportadora1");
@@ -183,7 +170,7 @@ class DetalleEnvioServiceIMPLTest {
                 "dereccion1test",
                 "testtransportadora1",
                 123444,
-                null);
+                (new PedidoDto(1L,LocalDateTime.of(2020,11,12,12,12),EstatusPedido.PENDIENTE,null,null,null,null)));
         detalleEnvioService.guardarDetalleEnvio(detalleEnvioGuardado);
         //Given
         given(detalleEnvioRepository.findByPedidoId(detalleEnvioGuardado.pedidoDto().id())).willReturn(Optional.of(detalleEnvio));

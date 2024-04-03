@@ -20,6 +20,7 @@ public interface PedidoMapper {
     @Mapping(source = "pago", target = "pagoDto")
 
     PedidoDto pedidoToDto(Pedido pedido);
+    @Mapping(source = "cliente", target = "cliente")
     Pedido dtoToPedido(PedidoDto dto);
 
     @Mapping(source = "cliente", target = "cliente")
