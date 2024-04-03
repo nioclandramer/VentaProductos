@@ -9,6 +9,7 @@ public interface PagoMapper {
     PagoMapper INSTANCE= Mappers.getMapper(PagoMapper.class);
 
     PagoDto PagoToDto(Pago pago);
+
     Pago dtoToPago(PagoDto dto);
     Pago toEntity(PagoToSaveDto pagoSDTO);
 }

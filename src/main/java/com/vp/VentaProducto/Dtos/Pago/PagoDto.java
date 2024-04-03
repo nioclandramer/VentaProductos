@@ -8,4 +8,5 @@ public record PagoDto(Long id,
                       Float totalPago,
                       LocalDateTime fechaPago,
                       MetodoDePago metodoDePago) {
+
 }
