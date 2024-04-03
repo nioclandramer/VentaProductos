@@ -7,7 +7,9 @@ import com.vp.VentaProducto.Dtos.Pago.PagoDto;
 import com.vp.VentaProducto.Entidades.EstatusPedido;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public record PedidoDto(
         Long id,
@@ -17,4 +19,8 @@ public record PedidoDto(
         List<ItemPedidoDto> itemPedidoDtos,
         DetalleEnvioDto detalleEnvioDto,
         PagoDto pagoDto)  {
+    public List<ItemPedidoDto> itemPedidoDtos(){
+        return Collections.unmodifiableList(itemPedidoDtos);
+    }
+
 }
