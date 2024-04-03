@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 class ClienteServiceIMPLTest {
 
@@ -84,10 +84,8 @@ class ClienteServiceIMPLTest {
     @Test
     void GiveClienteId_whenFindClienteById_thenReturnException(){
         //given
-        given(clienteRepository.findById(any())).willReturn(Optional.ofNullable(null));
-        assertThrows(ClienteNotFoundException.class,()->{
-            clienteService.findById(any());
-        },"Cliente No Encontrado");
+        given(clienteRepository.findById(any())).willReturn(Optional.empty());
+        assertThrows(ClienteNotFoundException.class,()-> clienteService.findById(any()),"Cliente No Encontrado");
     }
 
     @Test
@@ -105,10 +103,10 @@ class ClienteServiceIMPLTest {
                 "test1",
                 "test1@gmail",
                 "test1direccion");
-        ClienteDto clienteDto=clienteService.guardarCliente(clienteGuardado);
+        clienteService.guardarCliente(clienteGuardado);
         //when
         cliente.setNombre("test2");
-        clienteDto=clienteService.guardarCliente(clienteGuardado);
+        ClienteDto clienteDto=clienteService.guardarCliente(clienteGuardado);
         //then
         assertThat(clienteDto).isNotNull();
         assertThat(clienteDto.id()).isEqualTo(1L);
