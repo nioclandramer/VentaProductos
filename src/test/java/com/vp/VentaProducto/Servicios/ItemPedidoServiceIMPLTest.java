@@ -173,19 +173,19 @@ class ItemPedidoServiceIMPLTest {
     @Test
     void totalVentasPorProducto() {
         //Optional<List<ItemPedido>> list=itemPedidoRepository.findByProductoId(1L);
+        Long producto =1L;
+        Integer totalEsperado=20;
         itemPedido.setId(1L);
-        itemPedido.setCantida(14);
-        itemPedido.setPrecioUnitario(1234);
+        itemPedido.setCantida(2);
+        itemPedido.setPrecioUnitario(10);
         itemPedido.setPedido(null);
-        itemPedido.setProducto(new Producto(1L,"coco",12,11,null));
-        given(itemPedidoRepository.save(any())).willReturn(itemPedido);
-        ItemPedidoToSaveDto itemPedidoGuardado=new ItemPedidoToSaveDto(
-                1L,
-                14,
-                1234,
-                null,
-                new ProductoDto(1L,"coco",12,11));
-        itemPedidoService.guardarItemPedido(itemPedidoGuardado);
+        itemPedido.setProducto(new Producto(1L,"coco",2,10,null));
+        given(itemPedidoRepository.totalVentasPorProducto(producto)).willReturn(Optional.of(totalEsperado));
+        Optional<Integer> result= itemPedidoRepository.totalVentasPorProducto(producto);
+
+        assertNotNull(result);
+        assertTrue(result.isPresent());
+        assertEquals(totalEsperado,result.get());
     }
 
     @Test
